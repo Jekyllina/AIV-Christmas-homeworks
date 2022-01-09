@@ -7,7 +7,7 @@ struct list_node *list_get_tail(struct list_node **head)
 {  
     struct list_node *current_node = *head;  
     struct list_node *last_node = NULL;
-
+    
     while(current_node)
     {
         last_node = current_node;
@@ -68,13 +68,18 @@ struct list_node *list_remove(struct list_node **head, struct list_node *item)
 
     while(current_node->next != item)
     {
-        current_node = current_node->next;        
+        current_node = current_node->next; 
+
+        if(!current_node->next)    
+        {
+            return NULL;
+        }   
     }
 
-    tmp_node = current_node->next;
-    current_node->next = tmp_node->next;
-    current_node = tmp_node;
-    current_node->next = NULL;
+    tmp_node = current_node->next;  //node to remove
+    current_node->next = tmp_node->next;  //the next of the current node is the next of the one i have to remove
+    current_node = tmp_node;  //current node become the node i have to remove
+    current_node->next = NULL;    
     
     return current_node;
 }
@@ -96,6 +101,29 @@ struct string_item *string_item_new(const char *string)
     return item;
 }
 
+struct string_item *reverse_list (struct string_item **list, struct string_item **reversed_list)
+{
+    struct string_item *item_removed = (struct string_item*)list_remove((struct list_node**)&list,(struct list_node*)list_get_tail(list));
+    
+    while(item_removed)
+    {               
+        list_append((struct list_node **)&reversed_list, (struct list_node *)string_item_new(item_removed->string));
+        
+        struct list_node *tail = (struct list_node*)list_get_tail(list);
+
+        if(!tail)
+        {
+            item_removed = NULL;
+        }
+        else
+        {
+            item_removed = (struct string_item*)list_remove((struct list_node**)&list,(struct list_node*)list_get_tail(list));
+        }        
+    }
+    
+    return *reversed_list;
+}
+
 
 int main()
 {
@@ -114,13 +142,26 @@ int main()
     list_append_casting(&my_linked_list, list_node_ptr(element05));
         
     list_remove((struct list_node **)&my_linked_list, (struct list_node*)element02);
-    
+
     struct string_item *string_item = my_linked_list;
     
     while(string_item)
     {
         printf("%s\n", string_item->string);
         string_item = (struct string_item*)string_item->node.next;
+    }
+
+    printf("\n");
+
+
+    struct string_item *reversed = NULL;    
+    struct string_item *string_item_reversed = reverse_list(&my_linked_list, &reversed);    
+    printf("Reversed: \n");
+    
+    while(string_item_reversed)
+    {
+        printf("%s\n", string_item_reversed->string);
+        string_item_reversed = (struct string_item*)string_item_reversed->node.next;
     }
 
     return 0;
