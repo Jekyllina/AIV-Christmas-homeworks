@@ -2,15 +2,7 @@
 #include <stdint.h>
 #include <string.h>
 #include <stdlib.h>
-
-typedef struct dynarray
-{
-    size_t number_of_elements;
-    size_t size_of_element;  
-    size_t capacity;
-    uint8_t *data;  
-    uint8_t *tmp_data;  
-} dynarray_t;
+#include "dynarray_refactored.h"
 
 int dynarray_init(dynarray_t *array, const size_t size_of_element, size_t capacity)
 {
@@ -27,8 +19,6 @@ int dynarray_init(dynarray_t *array, const size_t size_of_element, size_t capaci
 
     return 0;
 }
-
-#define dynarray_init_type(array, type, capacity) dynarray_init(array, sizeof(type), capacity)
 
 void dynarray_clear(dynarray_t *array)
 {
