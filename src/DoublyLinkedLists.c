@@ -1,0 +1,167 @@
+#include <stddef.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include "DoublyLinkedLists.h"
+
+struct doubly_list_node *doubly_list_get_tail(struct doubly_list_node **head)
+{
+    struct doubly_list_node *current_node = *head;  
+    struct doubly_list_node *last_node = NULL;
+    
+    while(current_node)
+    {
+        last_node = current_node;
+        current_node = current_node->next;        
+    }
+
+    return last_node;
+}
+
+struct doubly_list_node *doubly_list_append(struct doubly_list_node **head, struct doubly_list_node *item)
+{
+    struct doubly_list_node *tail = doubly_list_get_tail(head);
+
+    if(!tail)
+    {
+        *head = item;
+    }
+    else
+    {
+        tail->next = item;
+    }
+
+    item->prev = tail;
+    item->next = NULL;
+
+    return item;
+}
+
+struct doubly_list_node *doubly_list_pop(struct doubly_list_node **head)
+{
+    struct doubly_list_node *current_head = *head;
+
+    if(!current_head)
+    {
+        return NULL;
+    }
+
+    *head = (*head)->next;  
+    current_head->next = NULL; 
+
+    return current_head;
+}
+
+struct doubly_list_node *doubly_list_remove(struct doubly_list_node **head, struct doubly_list_node *item)
+{    
+    struct doubly_list_node *prev_node = item->prev;
+    struct doubly_list_node *next_node = item->next;    
+    
+    if(!prev_node)
+    {       
+        doubly_list_pop(head);
+        return 0;
+    }     
+    
+    prev_node->next = next_node;    
+    next_node->prev = prev_node;
+    
+    item->prev = NULL;
+    item->next = NULL;    
+    
+    return item;
+}
+
+struct doubly_list_node *doubly_insert_after_item(struct doubly_list_node **head, struct doubly_list_node *item, struct doubly_list_node *item_to_add)
+{
+    struct doubly_list_node *next_node = item->next;
+
+    if(!next_node)
+    {
+        item_to_add->next = NULL;        
+    }
+    else
+    {
+        next_node->prev = item_to_add;
+        item_to_add->next = next_node;
+    }
+    
+    item_to_add->prev = item;
+    item->next = item_to_add;
+
+    return item_to_add;
+}
+
+struct doubly_list_node *doubly_insert_before_item(struct doubly_list_node **head, struct doubly_list_node *item, struct doubly_list_node *item_to_add)
+{
+    struct doubly_list_node *prev_node = item->prev;
+
+    if(!prev_node)
+    {
+        item->prev = item_to_add;
+        item_to_add->next = item;
+        *head = item_to_add;
+    }
+    else
+    {
+        item_to_add->prev = prev_node;
+        prev_node->next = item_to_add;
+
+        item->prev = item_to_add;
+        item_to_add->next = item;
+    }
+    
+    return item_to_add;
+}
+
+
+
+
+struct doubly_string_item *doubly_string_item_new(const char *string)
+{
+    struct doubly_string_item *item = malloc(sizeof(struct doubly_string_item));
+
+    if(!item)
+    {
+        return NULL;
+    }
+
+    item->string = string;
+
+    return item;
+}
+
+int main()
+{
+    struct doubly_string_item *my_linked_list = NULL;
+    
+    struct doubly_string_item *element01 = doubly_string_item_new("Red");
+    struct doubly_string_item *element02 = doubly_string_item_new("Yellow");
+    struct doubly_string_item *element03 = doubly_string_item_new("Orange");
+    struct doubly_string_item *element04 = doubly_string_item_new("Green");
+    struct doubly_string_item *element05 = doubly_string_item_new("Blue");
+
+    struct doubly_string_item *element06 = doubly_string_item_new("Black");
+    struct doubly_string_item *element07 = doubly_string_item_new("White");
+
+    
+    doubly_list_append_casting(&my_linked_list, doubly_list_node_ptr(element01));
+    doubly_list_append_casting(&my_linked_list, doubly_list_node_ptr(element02));
+    doubly_list_append_casting(&my_linked_list, doubly_list_node_ptr(element03));
+    doubly_list_append_casting(&my_linked_list, doubly_list_node_ptr(element04));
+    doubly_list_append_casting(&my_linked_list, doubly_list_node_ptr(element05));
+        
+    doubly_list_remove((struct doubly_list_node **)&my_linked_list, (struct doubly_list_node*)element02);
+
+    doubly_insert_after_item((struct doubly_list_node **)&my_linked_list, (struct doubly_list_node*)element03, (struct doubly_list_node*)element06);
+    doubly_insert_before_item((struct doubly_list_node **)&my_linked_list, (struct doubly_list_node*)element01, (struct doubly_list_node*)element07);
+
+    struct doubly_string_item *string_item = my_linked_list;
+    
+    while(string_item)
+    {
+        printf("%s\n", string_item->string);
+        string_item = (struct doubly_string_item*)string_item->node.next;
+    }
+
+    return 0;
+}

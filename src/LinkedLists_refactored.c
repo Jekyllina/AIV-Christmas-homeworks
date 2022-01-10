@@ -117,7 +117,7 @@ struct string_item *reverse_list (struct string_item **list, struct string_item 
         }
         else
         {
-            item_removed = (struct string_item*)list_remove((struct list_node**)&list,(struct list_node*)list_get_tail(list));
+            item_removed = (struct string_item*)list_remove((struct list_node**)&list, tail);
         }        
     }
     
