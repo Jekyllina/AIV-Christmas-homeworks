@@ -24,4 +24,7 @@ struct doubly_string_item *doubly_string_item_new(const char *string);
 
 #define doubly_list_node_doubleptr(obj) (struct doubly_list_node **)obj
 #define doubly_list_node_ptr(obj) (struct doubly_list_node*)obj
-#define doubly_list_append_casting(list, item) doubly_list_append(doubly_list_node_doubleptr(list), item)
+#define doubly_list_append_casting(list, item) doubly_list_append(doubly_list_node_doubleptr(list), doubly_list_node_ptr(item))    
+#define doubly_list_remove_casting(list, item) doubly_list_remove(doubly_list_node_doubleptr(list), doubly_list_node_ptr(item));    
+#define doubly_insert_after_item_cast(list, item, item_to_add) doubly_insert_after_item(doubly_list_node_doubleptr(list), doubly_list_node_ptr(item), doubly_list_node_ptr(item_to_add));        
+#define doubly_insert_before_item_cast(list, item, item_to_add) doubly_insert_before_item(doubly_list_node_doubleptr(list), doubly_list_node_ptr(item), doubly_list_node_ptr(item_to_add));

@@ -21,4 +21,5 @@ struct string_item *string_item_new(const char *string);
 
 #define list_node_doubleptr(obj) (struct list_node **)obj
 #define list_node_ptr(obj) (struct list_node*)obj
-#define list_append_casting(list, item) list_append(list_node_doubleptr(list), item)
+#define list_append_casting(list, item) list_append(list_node_doubleptr(list), list_node_ptr(item))
+#define list_remove_casting(list, item) list_remove(list_node_doubleptr(list), list_node_ptr(item));  

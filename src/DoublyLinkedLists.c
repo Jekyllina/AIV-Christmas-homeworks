@@ -54,17 +54,24 @@ struct doubly_list_node *doubly_list_pop(struct doubly_list_node **head)
 struct doubly_list_node *doubly_list_remove(struct doubly_list_node **head, struct doubly_list_node *item)
 {    
     struct doubly_list_node *prev_node = item->prev;
-    struct doubly_list_node *next_node = item->next;    
+    struct doubly_list_node *next_node = item->next; 
+
+    if(!next_node)
+    {
+        prev_node->next = NULL; 
+    }  
+    else
+    {
+        prev_node->next = next_node;    
+        next_node->prev = prev_node;    
+    } 
     
     if(!prev_node)
     {       
         doubly_list_pop(head);
         return 0;
-    }     
-    
-    prev_node->next = next_node;    
-    next_node->prev = prev_node;
-    
+    }    
+     
     item->prev = NULL;
     item->next = NULL;    
     
@@ -110,9 +117,8 @@ struct doubly_list_node *doubly_insert_before_item(struct doubly_list_node **hea
         item_to_add->next = item;
     }
     
-    return item_to_add;
+    return item_to_add;    
 }
-
 
 
 
@@ -144,16 +150,16 @@ int main()
     struct doubly_string_item *element07 = doubly_string_item_new("White");
 
     
-    doubly_list_append_casting(&my_linked_list, doubly_list_node_ptr(element01));
-    doubly_list_append_casting(&my_linked_list, doubly_list_node_ptr(element02));
-    doubly_list_append_casting(&my_linked_list, doubly_list_node_ptr(element03));
-    doubly_list_append_casting(&my_linked_list, doubly_list_node_ptr(element04));
-    doubly_list_append_casting(&my_linked_list, doubly_list_node_ptr(element05));
+    doubly_list_append_casting(&my_linked_list, element01);
+    doubly_list_append_casting(&my_linked_list, element02);
+    doubly_list_append_casting(&my_linked_list, element03);
+    doubly_list_append_casting(&my_linked_list, element04);
+    doubly_list_append_casting(&my_linked_list, element05);
         
-    doubly_list_remove((struct doubly_list_node **)&my_linked_list, (struct doubly_list_node*)element02);
+    doubly_list_remove_casting(&my_linked_list, element02);
 
-    doubly_insert_after_item((struct doubly_list_node **)&my_linked_list, (struct doubly_list_node*)element03, (struct doubly_list_node*)element06);
-    doubly_insert_before_item((struct doubly_list_node **)&my_linked_list, (struct doubly_list_node*)element01, (struct doubly_list_node*)element07);
+    doubly_insert_after_item_cast(&my_linked_list, element03, element06);
+    doubly_insert_before_item_cast(&my_linked_list, element01, element07);
 
     struct doubly_string_item *string_item = my_linked_list;
     
@@ -161,7 +167,7 @@ int main()
     {
         printf("%s\n", string_item->string);
         string_item = (struct doubly_string_item*)string_item->node.next;
-    }
+    }    
 
     return 0;
 }

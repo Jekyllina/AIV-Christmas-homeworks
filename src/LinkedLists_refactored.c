@@ -135,13 +135,13 @@ int main()
     struct string_item *element04 = string_item_new("Hello");
     struct string_item *element05 = string_item_new("Tail");
     
-    list_append_casting(&my_linked_list, list_node_ptr(element01));
-    list_append_casting(&my_linked_list, list_node_ptr(element02));
-    list_append_casting(&my_linked_list, list_node_ptr(element03));
-    list_append_casting(&my_linked_list, list_node_ptr(element04));
-    list_append_casting(&my_linked_list, list_node_ptr(element05));
+    list_append_casting(&my_linked_list, element01);
+    list_append_casting(&my_linked_list, element02);
+    list_append_casting(&my_linked_list, element03);
+    list_append_casting(&my_linked_list, element04);
+    list_append_casting(&my_linked_list, element05);
         
-    list_remove((struct list_node **)&my_linked_list, (struct list_node*)element02);
+    list_remove_casting(&my_linked_list, element02);
 
     struct string_item *string_item = my_linked_list;
     
