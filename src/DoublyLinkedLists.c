@@ -120,6 +120,68 @@ struct doubly_list_node *doubly_insert_before_item(struct doubly_list_node **hea
     return item_to_add;    
 }
 
+//doesn't work
+struct doubly_list_node *doubly_shuffle_list(struct doubly_list_node **head, struct doubly_list_node **arr, int num_of_elements)
+{
+    srand(time(NULL));
+    
+    int n;
+
+    for(int i = 0; i < num_of_elements; i++)
+    {
+        n = rand() % num_of_elements;        
+        struct doubly_list_node *item = arr[i];        
+        struct doubly_list_node *item2 = arr[n];
+        
+        struct doubly_list_node tmp = *item;
+        
+        item = item2; 
+       
+        if(!item2->prev)
+        {            
+            *head = item;
+            item->prev = NULL;
+        }
+        else
+        {            
+            item->prev = item2->prev;
+        }
+
+        if(!item2->next)
+        {           
+            item->next  = NULL;
+        }
+        else
+        {            
+            item->next = item2->next;
+        }
+
+
+        item2 = &tmp;      
+
+        if(!tmp.prev)
+        {            
+            *head = item2;
+            item2->prev = NULL;
+        }
+        else
+        {            
+            item2->prev = tmp.prev;
+        }
+
+        if(!tmp.next)
+        {            
+            item2->next  = NULL;
+        }
+        else
+        {            
+            item2->next = tmp.next;
+        } 
+    }
+
+    return *head;
+}
+
 
 
 struct doubly_string_item *doubly_string_item_new(const char *string)
@@ -168,6 +230,18 @@ int main()
         printf("%s\n", string_item->string);
         string_item = (struct doubly_string_item*)string_item->node.next;
     }    
+
+
+    //doesn't work
+    printf("After Shuffle:\n");
+    struct doubly_list_node *arr[6] = {(struct doubly_list_node*)element01, (struct doubly_list_node*)element03, (struct doubly_list_node*)element04, (struct doubly_list_node*)element05, (struct doubly_list_node*)element06, (struct doubly_list_node*)element07};
+    struct doubly_string_item *string_item2 = (struct doubly_string_item*)doubly_shuffle_list((struct doubly_list_node **)&my_linked_list, arr, 6);
+    
+    while(string_item2)
+    {
+        printf("%s\n", string_item2->string);
+        string_item2 = (struct doubly_string_item*)string_item2->node.next;
+    }
 
     return 0;
 }
