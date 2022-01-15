@@ -130,58 +130,63 @@ struct doubly_list_node *doubly_shuffle_list(struct doubly_list_node **head, str
     for(int i = 0; i < num_of_elements; i++)
     {
         n = rand() % num_of_elements;        
-        struct doubly_list_node *item = arr[i];        
+        struct doubly_list_node *item = arr[i];    
         struct doubly_list_node *item2 = arr[n];
         
-        struct doubly_list_node tmp = *item;
+        struct doubly_list_node *item_prev = item->prev;
+        struct doubly_list_node *item_next = item->next;
+
+        struct doubly_list_node *item2_prev = item2->prev;
+        struct doubly_list_node *item2_next = item2->next;
+
+        struct doubly_list_node *tmp = item;  
         
         item = item2; 
-       
-        if(!item2->prev)
+        
+        if(!item2_prev)
         {            
             *head = item;
             item->prev = NULL;
         }
         else
         {            
-            item->prev = item2->prev;
+            item->prev = item2_prev;
         }
 
-        if(!item2->next)
+        if(!item2_next)
         {           
             item->next  = NULL;
         }
         else
         {            
-            item->next = item2->next;
+            item->next = item2_next;
         }
 
 
-        item2 = &tmp;      
+        item2 = tmp;      
 
-        if(!tmp.prev)
+        if(!item_prev)
         {            
             *head = item2;
             item2->prev = NULL;
         }
         else
         {            
-            item2->prev = tmp.prev;
+            item2->prev = item_prev;
         }
 
-        if(!tmp.next)
+        if(!item_next)
         {            
             item2->next  = NULL;
         }
         else
         {            
-            item2->next = tmp.next;
+            item2->next = item_next;
         } 
     }
 
     return *head;
 }
-
 
 
 struct doubly_string_item *doubly_string_item_new(const char *string)
@@ -236,12 +241,14 @@ int main()
     printf("After Shuffle:\n");
     struct doubly_list_node *arr[6] = {(struct doubly_list_node*)element01, (struct doubly_list_node*)element03, (struct doubly_list_node*)element04, (struct doubly_list_node*)element05, (struct doubly_list_node*)element06, (struct doubly_list_node*)element07};
     struct doubly_string_item *string_item2 = (struct doubly_string_item*)doubly_shuffle_list((struct doubly_list_node **)&my_linked_list, arr, 6);
-    
+    // doubly_shuffle_list((struct doubly_list_node **)&my_linked_list, arr, 6);
+    // struct doubly_string_item *string_item2 = my_linked_list;
+
     while(string_item2)
     {
         printf("%s\n", string_item2->string);
         string_item2 = (struct doubly_string_item*)string_item2->node.next;
     }
-
+    
     return 0;
 }
