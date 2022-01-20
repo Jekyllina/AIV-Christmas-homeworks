@@ -109,10 +109,20 @@ struct set_node *set_search(struct set_table *table, const char *key, const size
     }
     else
     {
-        //controllo lunghezza
-        //controllo stringa
-    }  
-
+        while(node_to_find)
+        {
+            if(node_to_find->key_len == key_len)
+            {
+                if(strcmp(node_to_find->key, key) == 0)
+                    break;
+                else
+                    node_to_find = node_to_find->next;
+            }
+            else
+                node_to_find = node_to_find->next;
+        }    
+    } 
+    
     return node_to_find;  
 }
 
@@ -149,8 +159,20 @@ int main()
 
     print_table(table, size);
 
-    struct set_node *find_node = set_search(table, "ww", 2);
-    printf("Node to find %s", find_node->key);
+    struct set_node *find_node = set_search(table, "hello", 5);
+
+    if(!find_node)
+        printf("The word hello is not in the Set\n");
+    else
+        printf("Node found: %s\n", find_node->key);
+
+
+    struct set_node *find_node2 = set_search(table, "red", 3);
+
+    if(!find_node2)
+        printf("The word red is not in the Set\n");
+    else
+        printf("Node found: %s\n", find_node2->key);
     
     return 0;
 }
