@@ -126,6 +126,28 @@ struct set_node *set_search(struct set_table *table, const char *key, const size
     return node_to_find;  
 }
 
+struct set_node *set_remove(struct set_table *table, const char *key, const size_t key_len)
+{
+    size_t hash = djb33x_hash(key, key_len);
+    size_t index = hash % table->hashmap_size;  
+
+    struct set_node *current_node = table->nodes[index];
+
+    if(!current_node)
+    {
+        return NULL;
+    }
+
+    if(current_node->key_len == key_len && strcmp(current_node->key, key) == 0)
+    {
+        table->nodes[index] = current_node->next;
+        current_node->next = NULL;
+        return current_node;
+    }
+
+    return NULL;
+}
+
 void print_table(struct set_table *table, const size_t hashmap_size)
 {
     for (size_t i = 0; i < hashmap_size; i++)
@@ -159,20 +181,35 @@ int main()
 
     print_table(table, size);
 
-    struct set_node *find_node = set_search(table, "hello", 5);
+    //search
+    char *key = "hello";
+    struct set_node *find_node = set_search(table, key, 5);
 
     if(!find_node)
-        printf("The word hello is not in the Set\n");
+        printf("Key -%s- not found in the Set\n", key);
     else
         printf("Node found: %s\n", find_node->key);
 
 
-    struct set_node *find_node2 = set_search(table, "red", 3);
+    char *key2 = "red";
+    struct set_node *find_node2 = set_search(table, key2, 3);
 
     if(!find_node2)
-        printf("The word red is not in the Set\n");
+        printf("Key -%s- not found in the Set\n", key2);
     else
         printf("Node found: %s\n", find_node2->key);
+
+
+    //remove
+    char *key_remove = "hello";
+    struct set_node *node_to_remove = set_remove(table, key_remove, 5);
+
+    if(!node_to_remove)
+        printf("Key -%s- not found in the Set\n", key_remove);
+    else
+        printf("Removed: %s\n", node_to_remove->key);
+
+    print_table(table, size);    
     
     return 0;
 }

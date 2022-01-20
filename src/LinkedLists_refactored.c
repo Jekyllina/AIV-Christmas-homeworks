@@ -77,7 +77,7 @@ struct list_node *list_remove(struct list_node **head, struct list_node *item)
     }
 
     tmp_node = current_node->next;  //node to remove
-    current_node->next = tmp_node->next;  //the next of the current node is the next of the one i have to remove
+    current_node->next = tmp_node->next;  //the next of the current node become the next of the one i have to remove
     current_node = tmp_node;  //current node become the node i have to remove
     current_node->next = NULL;    
     
