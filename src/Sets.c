@@ -18,6 +18,7 @@ struct set_node
 {
     const char *key;
     size_t key_len;
+    struct set_node *prev;
     struct set_node *next;  
 };
 
@@ -67,6 +68,7 @@ struct set_node *set_insert(struct set_table *table, const char *key, const size
 
         table->nodes[index]->key = key;
         table->nodes[index]->key_len = key_len;
+        table->nodes[index]->prev = NULL;
         table->nodes[index]->next = NULL;
 
         return table->nodes[index];
@@ -92,6 +94,7 @@ struct set_node *set_insert(struct set_table *table, const char *key, const size
     }
 
     tail->next = new_item;
+    new_item->prev = tail;
 
     return new_item;
 }
@@ -201,15 +204,15 @@ int main()
 
 
     //remove
-    char *key_remove = "hello";
-    struct set_node *node_to_remove = set_remove(table, key_remove, 5);
+    // char *key_remove = "hello";
+    // struct set_node *node_to_remove = set_remove(table, key_remove, 5);
 
-    if(!node_to_remove)
-        printf("Key -%s- not found in the Set\n", key_remove);
-    else
-        printf("Removed: %s\n", node_to_remove->key);
+    // if(!node_to_remove)
+    //     printf("Key -%s- not found in the Set\n", key_remove);
+    // else
+    //     printf("Removed: %s\n", node_to_remove->key);
 
-    print_table(table, size);    
+    // print_table(table, size);    
     
     return 0;
 }
