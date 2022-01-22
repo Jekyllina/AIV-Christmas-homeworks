@@ -71,7 +71,7 @@ struct doubly_list_node *doubly_list_remove(struct doubly_list_node **head, stru
         doubly_list_pop(head);
         return 0;
     }    
-     
+    
     item->prev = NULL;
     item->next = NULL;    
     

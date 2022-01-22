@@ -134,21 +134,36 @@ struct set_node *set_remove(struct set_table *table, const char *key, const size
     size_t hash = djb33x_hash(key, key_len);
     size_t index = hash % table->hashmap_size;  
 
-    struct set_node *current_node = table->nodes[index];
+    struct set_node *node_to_remove = set_search(table, key, key_len);
 
-    if(!current_node)
+    if(!node_to_remove)
     {
         return NULL;
     }
+    
+    struct set_node *prev_node = node_to_remove->prev;
+    struct set_node *next_node = node_to_remove->next;
 
-    if(current_node->key_len == key_len && strcmp(current_node->key, key) == 0)
+    if(!prev_node)
     {
-        table->nodes[index] = current_node->next;
-        current_node->next = NULL;
-        return current_node;
+        if(next_node)
+            table->nodes[index] = next_node;
     }
 
-    return NULL;
+    if(!next_node)
+    {
+        prev_node->next = NULL;
+    }
+    else
+    {
+        prev_node->next = next_node;    
+        next_node->prev = prev_node;    
+    }    
+
+    node_to_remove->next = NULL;
+    node_to_remove->prev = NULL; 
+
+    return node_to_remove;
 }
 
 void print_table(struct set_table *table, const size_t hashmap_size)
@@ -204,15 +219,15 @@ int main()
 
 
     //remove
-    // char *key_remove = "hello";
-    // struct set_node *node_to_remove = set_remove(table, key_remove, 5);
+    char *key_remove = "hello";
+    struct set_node *node_to_remove = set_remove(table, key_remove, 5);
+    
+    if(!node_to_remove)
+        printf("Key -%s- not found in the Set\n", key_remove);
+    else
+        printf("Removed: %s\n", node_to_remove->key);
 
-    // if(!node_to_remove)
-    //     printf("Key -%s- not found in the Set\n", key_remove);
-    // else
-    //     printf("Removed: %s\n", node_to_remove->key);
-
-    // print_table(table, size);    
+    print_table(table, size);    
     
     return 0;
 }
