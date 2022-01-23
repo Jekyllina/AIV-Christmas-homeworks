@@ -49,8 +49,43 @@ struct set_table *set_table_new(const size_t hashmap_size)
     return table;
 }
 
+struct set_node *set_search(struct set_table *table, const char *key, const size_t key_len)
+{
+    size_t hash = djb33x_hash(key, key_len);
+    size_t index = hash % table->hashmap_size;  
+
+    struct set_node *node_to_find = table->nodes[index];
+
+    if(!node_to_find)
+    {
+        return NULL;
+    }
+    else
+    {
+        while(node_to_find)
+        {
+            if(node_to_find->key_len == key_len)
+            {
+                if(strcmp(node_to_find->key, key) == 0)
+                    break;
+                else
+                    node_to_find = node_to_find->next;
+            }
+            else
+                node_to_find = node_to_find->next;
+        }    
+    } 
+    
+    return node_to_find;  
+}
+
 struct set_node *set_insert(struct set_table *table, const char *key, const size_t key_len)
 {
+    struct set_node *control_node = set_search(table, key, key_len);
+
+    if(control_node)
+        return NULL;
+    
     size_t hash = djb33x_hash(key, key_len);
 
     size_t index = hash % table->hashmap_size;  
@@ -99,36 +134,6 @@ struct set_node *set_insert(struct set_table *table, const char *key, const size
     return new_item;
 }
 
-struct set_node *set_search(struct set_table *table, const char *key, const size_t key_len)
-{
-    size_t hash = djb33x_hash(key, key_len);
-    size_t index = hash % table->hashmap_size;  
-
-    struct set_node *node_to_find = table->nodes[index];
-
-    if(!node_to_find)
-    {
-        return NULL;
-    }
-    else
-    {
-        while(node_to_find)
-        {
-            if(node_to_find->key_len == key_len)
-            {
-                if(strcmp(node_to_find->key, key) == 0)
-                    break;
-                else
-                    node_to_find = node_to_find->next;
-            }
-            else
-                node_to_find = node_to_find->next;
-        }    
-    } 
-    
-    return node_to_find;  
-}
-
 struct set_node *set_remove(struct set_table *table, const char *key, const size_t key_len)
 {
     size_t hash = djb33x_hash(key, key_len);
@@ -147,18 +152,25 @@ struct set_node *set_remove(struct set_table *table, const char *key, const size
     if(!prev_node)
     {
         if(next_node)
+        {
             table->nodes[index] = next_node;
-    }
-
-    if(!next_node)
-    {
-        prev_node->next = NULL;
+            next_node->prev = NULL;            
+        }
+        else
+            table->nodes[index] = NULL;       
     }
     else
     {
-        prev_node->next = next_node;    
-        next_node->prev = prev_node;    
-    }    
+        if(!next_node)
+        {
+            prev_node->next = NULL;
+        }
+        else
+        {
+            prev_node->next = next_node;    
+            next_node->prev = prev_node;    
+        }
+    }        
 
     node_to_remove->next = NULL;
     node_to_remove->prev = NULL; 
@@ -200,6 +212,8 @@ int main()
     print_table(table, size);
 
     //search
+    printf("\n--- Search test ---\n");
+
     char *key = "hello";
     struct set_node *find_node = set_search(table, key, 5);
 
@@ -207,7 +221,6 @@ int main()
         printf("Key -%s- not found in the Set\n", key);
     else
         printf("Node found: %s\n", find_node->key);
-
 
     char *key2 = "red";
     struct set_node *find_node2 = set_search(table, key2, 3);
@@ -219,6 +232,8 @@ int main()
 
 
     //remove
+    printf("\n--- Remove test ---\n");
+
     char *key_remove = "hello";
     struct set_node *node_to_remove = set_remove(table, key_remove, 5);
     
@@ -227,6 +242,17 @@ int main()
     else
         printf("Removed: %s\n", node_to_remove->key);
 
+    char *key_remove2 = "dog";
+    struct set_node *node_to_remove2 = set_remove(table, key_remove2, 3);
+    
+    if(!node_to_remove2)
+        printf("Key -%s- not found in the Set\n", key_remove2);
+    else
+        printf("Removed: %s\n", node_to_remove2->key);
+
+    //try to insert a key that already exist  
+    struct set_node *element07 = set_insert(table, "ww", 2);
+    
     print_table(table, size);    
     
     return 0;
