@@ -1,6 +1,7 @@
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include "DoublyLinkedLists.h"
 
 struct doubly_list_node *doubly_list_get_tail(struct doubly_list_node **head)
@@ -125,6 +126,79 @@ struct doubly_list_node *doubly_insert_before_item(struct doubly_list_node **hea
     return item_to_add;    
 }
 
+struct doubly_list_node *take_list_item(struct doubly_list_node **head, int element_index)
+{
+    int counter = 0;
+
+    struct doubly_list_node *current_node = *head;  
+    struct doubly_list_node *node_to_take = NULL;
+    
+    while(current_node)
+    {
+        node_to_take = current_node;
+        current_node = current_node->next;  
+
+        if(counter == element_index)   
+            break;
+
+        counter++;   
+    }    
+
+    return node_to_take;
+}
+
+int take_list_items_count(struct doubly_list_node **head)
+{
+    int counter = 0;
+
+    struct doubly_list_node *current_node = *head;  
+    struct doubly_list_node *node_to_take = NULL;
+    
+    while(current_node)
+    {
+        node_to_take = current_node;
+        current_node = current_node->next;         
+        counter++;   
+    }    
+
+    return counter;
+}
+
+struct doubly_list_node *shuffle_list(struct doubly_list_node **head, int number_of_shuffles)
+{
+    srand(time(NULL));    
+    int randomN = 0;
+    int randomN2 = 0;
+
+    int elements = take_list_items_count(head);
+    
+    for (int i = 0; i < number_of_shuffles; i++)
+    {
+        randomN = rand() % elements;
+        randomN2 = rand() % elements-1;   
+
+        if(i%2 == 0)
+        {            
+            struct doubly_list_node *node = take_list_item(head, randomN);
+            struct doubly_list_node *node_removed = doubly_list_remove(head, node);
+            struct doubly_list_node *node2 = take_list_item(head, randomN2);
+
+            doubly_insert_before_item(head, node2, node_removed);
+        }
+        else
+        {            
+            struct doubly_list_node *node = take_list_item(head, randomN);
+            struct doubly_list_node *node_removed = doubly_list_remove(head, node);
+            struct doubly_list_node *node2 = take_list_item(head, randomN2);
+
+            doubly_insert_after_item(head, node2, node_removed);
+        }
+
+        printf("N1: %d, N2: %d\n", randomN, randomN2);    
+    }
+
+    return *head;    
+}
 
 
 struct doubly_string_item *doubly_string_item_new(const char *string)
@@ -166,13 +240,22 @@ int main()
     doubly_insert_before_item_cast(&my_linked_list, element02, element07);
     doubly_insert_after_item_cast(&my_linked_list, element07, element06);
 
-    struct doubly_string_item *string_item = my_linked_list;
+    struct doubly_string_item *string_item = my_linked_list;    
     
     while(string_item)
     {       
         printf("%s\n", string_item->string);
         string_item = (struct doubly_string_item*)string_item->node.next;
-    } 
+    }
+
+    printf("\n After shuffle\n");
+    struct doubly_string_item *string_item_shuffled = (struct doubly_string_item *)doubly_shuffle_list_cast(&my_linked_list, 3);
+   
+    while(string_item_shuffled)
+    {       
+        printf("%s\n", string_item_shuffled->string);
+        string_item_shuffled = (struct doubly_string_item*)string_item_shuffled->node.next;
+    }
 
     return 0;
 }
