@@ -1,5 +1,4 @@
 #include <stddef.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include "LinkedLists_refactored.h"
 
@@ -62,24 +61,25 @@ struct list_node *list_remove(struct list_node **head, struct list_node *item)
 
     if(current_node == item)
     {       
-        list_pop(head);
-        return 0;
-    }  
-
-    while(current_node->next != item)
+        current_node = list_pop(head);        
+    } 
+    else
     {
-        current_node = current_node->next; 
-
-        if(!current_node->next)    
+        while(current_node->next != item)
         {
-            return NULL;
-        }   
-    }
+            current_node = current_node->next; 
 
-    tmp_node = current_node->next;  //node to remove
-    current_node->next = tmp_node->next;  //the next of the current node become the next of the one i have to remove
-    current_node = tmp_node;  //current node become the node i have to remove
-    current_node->next = NULL;    
+            if(!current_node->next)    
+            {
+                return NULL;
+            }   
+        }
+
+        tmp_node = current_node->next;  //node to remove
+        current_node->next = tmp_node->next;  //the next of the current node become the next of the one i have to remove
+        current_node = tmp_node;  //current node become the node i have to remove
+        current_node->next = NULL;    
+    }    
     
     return current_node;
 }
@@ -122,47 +122,4 @@ struct string_item *reverse_list (struct string_item **list, struct string_item 
     }
     
     return *reversed_list;
-}
-
-
-int main()
-{
-    struct string_item *my_linked_list = NULL;
-    
-    struct string_item *element01 = string_item_new("Hello World");
-    struct string_item *element02 = string_item_new("Test001");
-    struct string_item *element03 = string_item_new("Test002");
-    struct string_item *element04 = string_item_new("Hello");
-    struct string_item *element05 = string_item_new("Tail");
-    
-    list_append_casting(&my_linked_list, element01);
-    list_append_casting(&my_linked_list, element02);
-    list_append_casting(&my_linked_list, element03);
-    list_append_casting(&my_linked_list, element04);
-    list_append_casting(&my_linked_list, element05);
-        
-    list_remove_casting(&my_linked_list, element02);
-
-    struct string_item *string_item = my_linked_list;
-    
-    while(string_item)
-    {
-        printf("%s\n", string_item->string);
-        string_item = (struct string_item*)string_item->node.next;
-    }
-
-    printf("\n");
-
-
-    struct string_item *reversed = NULL;    
-    struct string_item *string_item_reversed = reverse_list(&my_linked_list, &reversed);    
-    printf("Reversed: \n");
-    
-    while(string_item_reversed)
-    {
-        printf("%s\n", string_item_reversed->string);
-        string_item_reversed = (struct string_item*)string_item_reversed->node.next;
-    }
-
-    return 0;
 }

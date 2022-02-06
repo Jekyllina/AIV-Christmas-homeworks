@@ -1,3 +1,2 @@
 MD bin
-clang.exe -Iinclude -o bin\doublylinkedlist.lib src\DoublyLinkedLists.c -fuse-ld=llvm-lib
-clang.exe -Iinclude -o bin\DoublyLists.exe src\DoublyLinkedLists.c -Lbin -l doublylinkedlist
+clang.exe -Icore\include -o bin\doublylinkedlist.lib core\src\DoublyLinkedLists.c -fuse-ld=llvm-lib
