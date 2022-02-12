@@ -1,0 +1,35 @@
+CC := clang.exe
+
+INCLUDE := -Icore\include
+TESTINCLUDE := -Itest\include
+
+all: bin\dynarray02.exe
+
+bin\dynarray.o: core\src\dynarray_refactored.c 
+	$(CC) -c $(INCLUDE) -o $@ $^
+
+bin\dynarray_main.o: app\dynarray_main.c 
+	$(CC) -c $(INCLUDE) -o $@ $^
+
+bin\dynarray02.exe: bin\dynarray.o bin\dynarray_main.o
+	$(CC) -o $@ $^
+
+app: bin\dynarray02.exe
+	bin\dynarray02.exe
+
+
+test: bin\dynarraytest.exe
+
+bin\dynarraytest.o: test\src\dynarray_test.c core\include\dynarray_refactored.h 
+	$(CC) -c $(INCLUDE) $(TESTINCLUDE) -o $@ $<
+
+bin\dynarraytest_main.o: test\src\main.c 
+	$(CC) -c $(INCLUDE) $(TESTINCLUDE) -o $@ $^
+
+bin\dynarraytest.exe: bin\dynarraytest.o bin\dynarraytest_main.o
+	$(CC) -o $@ $^
+
+testexe: bin\dynarraytest.exe
+	bin\dynarraytest.exe
+
+.PHONY: all app test testexe

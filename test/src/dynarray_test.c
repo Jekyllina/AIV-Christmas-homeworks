@@ -20,3 +20,8 @@ CLOVE_TEST(ArrayIsEmpty) {
     int elements = dynarray_len(&array);
     CLOVE_INT_EQ(0, elements);
 }
+
+CLOVE_TEST(ClearedArray) {
+    dynarray_clear(&array);
+    CLOVE_NULL(&array);
+}
