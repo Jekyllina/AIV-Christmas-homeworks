@@ -68,6 +68,7 @@ int dynarray_get(const dynarray_t *array, const size_t index, void *value)
    
     const size_t offset = index * array->size_of_element;
     memcpy(value, array->data + offset, array->size_of_element);
+
     return 0;
 }
 

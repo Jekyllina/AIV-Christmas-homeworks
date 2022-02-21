@@ -23,5 +23,54 @@ CLOVE_TEST(ArrayIsEmpty) {
 
 CLOVE_TEST(ClearedArray) {
     dynarray_clear(&array);
-    CLOVE_NULL(&array);
+    CLOVE_NULL(&array.data);
+}
+
+CLOVE_TEST(AppendSuccess) {
+    int a = 10;
+    dynarray_append(&array, &a);
+
+    int elements = dynarray_len(&array);
+    CLOVE_INT_EQ(1, elements);
+}
+
+CLOVE_TEST(VerifyAddedElementWithGet)
+{
+    int a = 10;
+    dynarray_append(&array, &a);
+
+    int value;
+    dynarray_get(&array, 0, &value);
+    CLOVE_INT_EQ(10, value);
+}
+
+CLOVE_TEST(RemoveElement)
+{
+    int a = 10;
+    int b = 30;
+    int c = 50;
+    dynarray_append(&array, &a);
+    dynarray_append(&array, &b);
+    dynarray_append(&array, &c);
+
+    dynarray_remove(&array, 1);
+
+    int elements = dynarray_len(&array);
+    CLOVE_INT_EQ(2, elements);
+}
+
+CLOVE_TEST(RemoveElementAndVerifyIfLastIsCorrect)
+{
+    int a = 10;
+    int b = 30;
+    int c = 50;
+    dynarray_append(&array, &a);
+    dynarray_append(&array, &b);
+    dynarray_append(&array, &c);
+
+    dynarray_remove(&array, 2);
+
+    int value;
+    dynarray_get(&array, 1, &value);
+    CLOVE_INT_EQ(30, value);
 }

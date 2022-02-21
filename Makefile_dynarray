@@ -20,13 +20,13 @@ app: bin\dynarray02.exe
 
 test: bin\dynarraytest.exe
 
-bin\dynarraytest.o: test\src\dynarray_test.c core\include\dynarray_refactored.h 
-	$(CC) -c $(INCLUDE) $(TESTINCLUDE) -o $@ $<
+bin\dynarraytest.o: test\src\dynarray_test.c 
+	$(CC) -c $(INCLUDE) $(TESTINCLUDE) -o $@ $^
 
 bin\dynarraytest_main.o: test\src\main.c 
 	$(CC) -c $(INCLUDE) $(TESTINCLUDE) -o $@ $^
 
-bin\dynarraytest.exe: bin\dynarraytest.o bin\dynarraytest_main.o
+bin\dynarraytest.exe: bin\dynarray.o bin\dynarraytest.o bin\dynarraytest_main.o
 	$(CC) -o $@ $^
 
 testexe: bin\dynarraytest.exe
