@@ -23,7 +23,7 @@ CLOVE_TEST(ArrayIsEmpty) {
 
 CLOVE_TEST(ClearedArray) {
     dynarray_clear(&array);
-    CLOVE_NULL(&array.data);
+    CLOVE_NULL(array.data);
 }
 
 CLOVE_TEST(AppendSuccess) {
