@@ -1,0 +1,36 @@
+CC := clang.exe
+
+INCLUDE := -Icore\include
+TESTINCLUDE := -Itest\include
+
+all: bin\Lists.exe
+
+bin\linkedlist.o: core\src\LinkedLists_refactored.c 
+	$(CC) -c $(INCLUDE) -o $@ $^
+
+bin\linkedlist_main.o: app\LinkedList_main.c 
+	$(CC) -c $(INCLUDE) -o $@ $^
+
+bin\Lists.exe: bin\linkedlist.o bin\linkedlist_main.o
+	$(CC) -o $@ $^
+
+app: bin\Lists.exe
+	bin\Lists.exe
+
+
+
+test: bin\LinkedListTest.exe
+
+bin\liststest.o: test\src\linkedList_test.c 
+	$(CC) -c $(INCLUDE) $(TESTINCLUDE) -o $@ $^
+
+bin\liststest_main.o: test\src\main.c 
+	$(CC) -c $(INCLUDE) $(TESTINCLUDE) -o $@ $^
+
+bin\LinkedListTest.exe: bin\linkedlist.o bin\liststest.o bin\liststest_main.o
+	$(CC) -o $@ $^
+
+testexe: bin\LinkedListTest.exe
+	bin\LinkedListTest.exe
+
+.PHONY: all app test testexe
