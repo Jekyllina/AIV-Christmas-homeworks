@@ -18,6 +18,8 @@ struct string_item
 };
 
 struct string_item *string_item_new(const char *string);
+void clear_list(struct string_item **list);
+
 
 #define list_node_doubleptr(obj) (struct list_node **)obj
 #define list_node_ptr(obj) (struct list_node*)obj

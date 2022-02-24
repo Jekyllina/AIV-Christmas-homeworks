@@ -27,9 +27,9 @@ int main()
         string_item = (struct string_item*)string_item->node.next;
     }
 
-    printf("\n");
+    printf("\n");    
 
-
+    
     struct string_item *reversed = NULL;    
     struct string_item *string_item_reversed = reverse_list(&my_linked_list, &reversed);    
     printf("Reversed: \n");
@@ -39,6 +39,11 @@ int main()
         printf("%s\n", string_item_reversed->string);
         string_item_reversed = (struct string_item*)string_item_reversed->node.next;
     }
+
+    clear_list(&string_item);
+    clear_list(&my_linked_list);
+    clear_list(&string_item_reversed);
+    clear_list(&reversed);
 
     return 0;
 }

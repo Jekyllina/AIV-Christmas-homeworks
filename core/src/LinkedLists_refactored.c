@@ -86,7 +86,6 @@ struct list_node *list_remove(struct list_node **head, struct list_node *item)
 
 
 
-
 struct string_item *string_item_new(const char *string)
 {
     struct string_item *item = malloc(sizeof(struct string_item));
@@ -99,6 +98,15 @@ struct string_item *string_item_new(const char *string)
     item->string = string;
 
     return item;
+}
+
+void clear_list(struct string_item **list)
+{    
+    // struct string_item *current = list;
+    // struct string_item *next = current->node.next;
+
+    free(list);  
+     
 }
 
 struct string_item *reverse_list (struct string_item **list, struct string_item **reversed_list)
