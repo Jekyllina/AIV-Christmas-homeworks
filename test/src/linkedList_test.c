@@ -9,7 +9,7 @@ CLOVE_SUITE_SETUP() {
 }
 
 CLOVE_SUITE_TEARDOWN() {
-    clear_list(my_linked_list);
+    clear_myelement(&my_linked_list);
 }
 
 CLOVE_TEST(ListIsNull)
@@ -19,14 +19,14 @@ CLOVE_TEST(ListIsNull)
 
 CLOVE_TEST(GetTailFailsWithEmptyList)
 {
-    struct list_node *node = list_get_tail(&my_linked_list);
+    struct list_node *node = list_get_tail((struct list_node**)&my_linked_list);
 
     CLOVE_NULL(node);
 }
 
 CLOVE_TEST(GetHeadFailsWithEmptyList)
 {
-    struct list_node *node = list_pop(&my_linked_list);
+    struct list_node *node = list_pop((struct list_node**)&my_linked_list);
 
     CLOVE_NULL(node);
 }
@@ -54,7 +54,7 @@ CLOVE_TEST(GetTailSuccess)
     list_append_casting(&my_linked_list, element);
     list_append_casting(&my_linked_list, element02);
 
-    struct string_item *tail = (struct string_item*)list_get_tail(&my_linked_list);
+    struct string_item *tail = (struct string_item*)list_get_tail((struct list_node**)&my_linked_list);
 
     CLOVE_STRING_EQ("Item02", tail->string);  
 }
@@ -67,7 +67,7 @@ CLOVE_TEST(GetHeadSuccess)
     list_append_casting(&my_linked_list, element);
     list_append_casting(&my_linked_list, element02);
 
-    struct string_item *head = (struct string_item*)list_pop(&my_linked_list);
+    struct string_item *head = (struct string_item*)list_pop((struct list_node**)&my_linked_list);
 
     CLOVE_STRING_EQ("Item", head->string);  
 }
@@ -80,7 +80,7 @@ CLOVE_TEST(Remove)
     list_append_casting(&my_linked_list, element);
     list_append_casting(&my_linked_list, element02);
 
-    struct string_item *removed = (struct string_item*)list_remove(&my_linked_list, element);
+    struct string_item *removed = (struct string_item*)list_remove_casting(&my_linked_list, element);
 
     CLOVE_STRING_EQ("Item", removed->string);      
 }
@@ -96,10 +96,10 @@ CLOVE_TEST(ReverseList)
     list_append_casting(&my_linked_list, element03);
     
     struct string_item *reversed = NULL;   
-    struct string_item *string_item_reversed = reverse_list(&my_linked_list, &reversed);   
+    struct string_item *string_item_reversed = reverse_linkedlist(&my_linked_list, &reversed);   
     
-    struct string_item *reversedTail = (struct string_item*)list_get_tail(&reversed);
-    struct string_item *reversedHead = (struct string_item*)list_pop(&reversed);
+    struct string_item *reversedTail = (struct string_item*)list_get_tail((struct list_node**)&reversed);
+    struct string_item *reversedHead = (struct string_item*)list_pop((struct list_node**)&reversed);
     
     CLOVE_STRING_EQ("Item", reversedTail->string);  
     CLOVE_STRING_EQ("Item03", reversedHead->string); 
@@ -107,7 +107,12 @@ CLOVE_TEST(ReverseList)
 
 CLOVE_TEST(ClearList)
 {
-    clear_list(my_linked_list);
+    struct string_item *item = string_item_new("Item");
+    list_append_casting(&my_linked_list, item);    
+    
+    clear_myelement(&item);
+    clear_myelement(&my_linked_list);
 
+    CLOVE_NULL(item);
     CLOVE_NULL(my_linked_list);
 }

@@ -162,7 +162,7 @@ int take_list_items_count(struct doubly_list_node **head)
     return counter;
 }
 
-struct doubly_list_node *shuffle_list(struct doubly_list_node **head, int number_of_shuffles)
+struct doubly_list_node *shuffle_doublylist(struct doubly_list_node **head, int number_of_shuffles)
 {
     srand(time(NULL));    
     int randomN = 0;
@@ -210,4 +210,10 @@ struct doubly_string_item *doubly_string_item_new(const char *string)
     item->string = string;
 
     return item;
+}
+
+void clear_myelement(struct doubly_string_item **item)
+{    
+    free(*item);
+    *item = NULL;
 }

@@ -36,6 +36,7 @@ int main()
         string_item = (struct doubly_string_item*)string_item->node.next;
     }
 
+
     printf("\n After shuffle\n");
     struct doubly_string_item *string_item_shuffled = (struct doubly_string_item *)doubly_shuffle_list_cast(&my_linked_list, 4);
    
@@ -44,6 +45,8 @@ int main()
         printf("%s\n", string_item_shuffled->string);
         string_item_shuffled = (struct doubly_string_item*)string_item_shuffled->node.next;
     }
+
+    clear_myelement(&my_linked_list);
 
     return 0;
 }

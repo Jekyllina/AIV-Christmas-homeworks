@@ -19,31 +19,60 @@ int main()
         
     list_remove_casting(&my_linked_list, element02);
 
-    struct string_item *string_item = my_linked_list;
+    printf("string: %s\n", element03->string);
+
+    if(!my_linked_list)
+        printf("list null\n");
+    else
+        printf("indirizzo %p\n", &my_linked_list);
     
-    while(string_item)
+    clear_myelement(&my_linked_list);
+    
+    if(!my_linked_list)
+        printf("list null\n");
+    else
+        printf("indirizzo %p\n", &my_linked_list);
+    
+    struct string_item *string_item = my_linked_list;    
+
+    clear_myelement(&element03);
+    
+    if(!element03)
+        printf("Null element\n");        
+    else
+        printf("string: %s\n", element03->string);
+
+    
+    if(!string_item)
     {
-        printf("%s\n", string_item->string);
-        string_item = (struct string_item*)string_item->node.next;
+        printf("null\n");
     }
-
-    printf("\n");    
-
-    
-    struct string_item *reversed = NULL;    
-    struct string_item *string_item_reversed = reverse_list(&my_linked_list, &reversed);    
-    printf("Reversed: \n");
-    
-    while(string_item_reversed)
+    else
     {
-        printf("%s\n", string_item_reversed->string);
-        string_item_reversed = (struct string_item*)string_item_reversed->node.next;
+        while(string_item)
+        {
+            printf("%s\n", string_item->string);
+            string_item = (struct string_item*)string_item->node.next;
+        }
     }
+    
 
-    clear_list(&string_item);
-    clear_list(&my_linked_list);
-    clear_list(&string_item_reversed);
-    clear_list(&reversed);
+    // printf("\n");   
+    
+    // struct string_item *reversed = NULL;    
+    // struct string_item *string_item_reversed = reverse_linkedlist(&my_linked_list, &reversed);    
+    // printf("Reversed: \n");
+    
+    // while(string_item_reversed)
+    // {
+    //     printf("%s\n", string_item_reversed->string);
+    //     string_item_reversed = (struct string_item*)string_item_reversed->node.next;
+    // }
+
+    // clear_mylist(&string_item);
+    // clear_mylist(&my_linked_list);
+    // clear_mylist(&string_item_reversed);
+    // clear_mylist(&reversed);
 
     return 0;
 }

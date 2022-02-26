@@ -1,0 +1,36 @@
+CC := clang.exe
+
+INCLUDE := -Icore\include
+TESTINCLUDE := -Itest\include
+
+all: bin\DoublyLists.exe
+
+bin\doublylinkedlist.o: core\src\DoublyLinkedLists.c 
+	$(CC) -c $(INCLUDE) -o $@ $^
+
+bin\doublylinkedlist_main.o: app\DoublyLinkedList_main.c 
+	$(CC) -c $(INCLUDE) -o $@ $^
+
+bin\DoublyLists.exe: bin\doublylinkedlist.o bin\doublylinkedlist_main.o
+	$(CC) -o $@ $^
+
+app: bin\DoublyLists.exe
+	bin\DoublyLists.exe
+
+
+
+test: bin\DoublyLinkedListTest.exe
+
+bin\doublyliststest.o: test\src\doublylinkedList_test.c 
+	$(CC) -c $(INCLUDE) $(TESTINCLUDE) -o $@ $^
+
+bin\doublyliststest_main.o: test\src\main.c 
+	$(CC) -c $(INCLUDE) $(TESTINCLUDE) -o $@ $^
+
+bin\DoublyLinkedListTest.exe: bin\doublylinkedlist.o bin\doublyliststest.o bin\doublyliststest_main.o
+	$(CC) -o $@ $^
+
+testexe: bin\DoublyLinkedListTest.exe
+	bin\DoublyLinkedListTest.exe
+
+.PHONY: all app test testexe

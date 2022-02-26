@@ -100,24 +100,21 @@ struct string_item *string_item_new(const char *string)
     return item;
 }
 
-void clear_list(struct string_item **list)
+void clear_myelement(struct string_item **item)
 {    
-    // struct string_item *current = list;
-    // struct string_item *next = current->node.next;
-
-    free(list);  
-     
+    free(*item);
+    *item = NULL;
 }
 
-struct string_item *reverse_list (struct string_item **list, struct string_item **reversed_list)
+struct string_item *reverse_linkedlist(struct string_item **list, struct string_item **reversed_list)
 {
-    struct string_item *item_removed = (struct string_item*)list_remove((struct list_node**)&list,(struct list_node*)list_get_tail(list));
+    struct string_item *item_removed = (struct string_item*)list_remove_casting(&list,list_get_tail((struct list_node **)list));
     
     while(item_removed)
     {               
         list_append((struct list_node **)&reversed_list, (struct list_node *)string_item_new(item_removed->string));
         
-        struct list_node *tail = (struct list_node*)list_get_tail(list);
+        struct list_node *tail = (struct list_node*)list_get_tail((struct list_node **)list);
 
         if(!tail)
         {

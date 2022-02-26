@@ -18,7 +18,8 @@ struct string_item
 };
 
 struct string_item *string_item_new(const char *string);
-void clear_list(struct string_item **list);
+void clear_myelement(struct string_item **item);
+struct string_item *reverse_linkedlist(struct string_item **list, struct string_item **reversed_list);
 
 
 #define list_node_doubleptr(obj) (struct list_node **)obj
