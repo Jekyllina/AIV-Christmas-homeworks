@@ -1,6 +1,9 @@
 #define CLOVE_SUITE_NAME DoublyLinkedListTest
 #include "clove-experimental.h"
 #include "DoublyLinkedLists.h"
+#include <stdio.h>
+
+#define rand() 1
 
 struct doubly_string_item *my_linked_list;
 
@@ -158,8 +161,8 @@ CLOVE_TEST(ItemsCount)
     CLOVE_INT_EQ(3, numElements);
 }
 
-CLOVE_TEST(ShuffleListVerifyLenght)
-{
+CLOVE_TEST(ShuffleList)
+{    
     struct doubly_string_item *element01 = doubly_string_item_new("Grey");
     struct doubly_string_item *element02 = doubly_string_item_new("Yellow");
     struct doubly_string_item *element03 = doubly_string_item_new("Blue");
@@ -174,8 +177,16 @@ CLOVE_TEST(ShuffleListVerifyLenght)
 
     int numElementsShuffledList = take_list_items_count((struct doubly_list_node **)&shuffledList);
 
+    struct doubly_string_item *item0 = (struct doubly_string_item *)take_list_item((struct doubly_list_node **)&shuffledList, 0);
+    struct doubly_string_item *item1 = (struct doubly_string_item *)take_list_item((struct doubly_list_node **)&shuffledList, 1);
+    struct doubly_string_item *item2 = (struct doubly_string_item *)take_list_item((struct doubly_list_node **)&shuffledList, 2);
+    
     CLOVE_NOT_NULL(shuffledList);
-    CLOVE_INT_EQ(numElements, numElementsShuffledList);
+    CLOVE_INT_EQ(numElements, numElementsShuffledList);    
+
+    CLOVE_STRING_EQ(item0->string, element01->string);
+    CLOVE_STRING_EQ(item1->string, element03->string);
+    CLOVE_STRING_EQ(item2->string, element02->string);
 }
 
-//to do: test shuffle and clear
+//to do: clear

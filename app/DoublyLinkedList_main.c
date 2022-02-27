@@ -1,10 +1,13 @@
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include "DoublyLinkedLists.h"
 
 int main()
 {
+    srand(time(NULL));    
+
     struct doubly_string_item *my_linked_list = NULL;
     
     struct doubly_string_item *element01 = doubly_string_item_new("Red");

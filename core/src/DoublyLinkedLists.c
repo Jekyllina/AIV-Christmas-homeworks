@@ -1,6 +1,5 @@
 #include <stddef.h>
 #include <stdlib.h>
-#include <time.h>
 #include "DoublyLinkedLists.h"
 
 struct doubly_list_node *doubly_list_get_tail(struct doubly_list_node **head)
@@ -164,7 +163,6 @@ int take_list_items_count(struct doubly_list_node **head)
 
 struct doubly_list_node *shuffle_doublylist(struct doubly_list_node **head, int number_of_shuffles)
 {
-    srand(time(NULL));    
     int randomN = 0;
     int randomN2 = 0;
 
