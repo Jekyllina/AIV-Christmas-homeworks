@@ -158,4 +158,24 @@ CLOVE_TEST(ItemsCount)
     CLOVE_INT_EQ(3, numElements);
 }
 
+CLOVE_TEST(ShuffleListVerifyLenght)
+{
+    struct doubly_string_item *element01 = doubly_string_item_new("Grey");
+    struct doubly_string_item *element02 = doubly_string_item_new("Yellow");
+    struct doubly_string_item *element03 = doubly_string_item_new("Blue");
+
+    doubly_list_append_casting(&my_linked_list, element01);
+    doubly_list_append_casting(&my_linked_list, element02);
+    doubly_list_append_casting(&my_linked_list, element03);
+
+    int numElements = take_list_items_count((struct doubly_list_node **)&my_linked_list);
+
+    struct doubly_string_item *shuffledList = (struct doubly_string_item *)doubly_shuffle_list_cast(&my_linked_list, 2);
+
+    int numElementsShuffledList = take_list_items_count((struct doubly_list_node **)&shuffledList);
+
+    CLOVE_NOT_NULL(shuffledList);
+    CLOVE_INT_EQ(numElements, numElementsShuffledList);
+}
+
 //to do: test shuffle and clear
