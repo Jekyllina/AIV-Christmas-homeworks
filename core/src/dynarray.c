@@ -1,7 +1,7 @@
 #include <stdint.h>
 #include <string.h>
 #include <stdlib.h>
-#include "dynarray_refactored.h"
+#include "dynarray.h"
 
 int dynarray_init(dynarray_t *array, const size_t size_of_element, size_t capacity)
 {

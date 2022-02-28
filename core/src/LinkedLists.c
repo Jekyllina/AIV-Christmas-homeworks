@@ -1,6 +1,6 @@
 #include <stddef.h>
 #include <stdlib.h>
-#include "LinkedLists_refactored.h"
+#include "LinkedLists.h"
 
 struct list_node *list_get_tail(struct list_node **head)
 {  
@@ -102,7 +102,7 @@ struct string_item *string_item_new(const char *string)
 
 void clear_myelement(struct string_item **item)
 {    
-    free(*item);
+    free(*item);    
     *item = NULL;
 }
 

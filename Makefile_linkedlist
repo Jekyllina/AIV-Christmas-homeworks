@@ -5,7 +5,7 @@ TESTINCLUDE := -Itest\include
 
 all: bin\Lists.exe
 
-bin\linkedlist.o: core\src\LinkedLists_refactored.c 
+bin\linkedlist.o: core\src\LinkedLists.c 
 	$(CC) -c $(INCLUDE) -o $@ $^
 
 bin\linkedlist_main.o: app\LinkedList_main.c 

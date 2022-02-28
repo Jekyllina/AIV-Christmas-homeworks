@@ -5,7 +5,7 @@ TESTINCLUDE := -Itest\include
 
 all: bin\dynarray02.exe
 
-bin\dynarray.o: core\src\dynarray_refactored.c 
+bin\dynarray.o: core\src\dynarray.c 
 	$(CC) -c $(INCLUDE) -o $@ $^
 
 bin\dynarray_main.o: app\dynarray_main.c 

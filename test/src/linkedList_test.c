@@ -1,6 +1,6 @@
 #define CLOVE_SUITE_NAME LinkedListTest
 #include "clove-experimental.h"
-#include "LinkedLists_refactored.h"
+#include "LinkedLists.h"
 
 struct string_item *my_linked_list;
 
