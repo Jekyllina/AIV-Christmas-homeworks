@@ -85,6 +85,38 @@ CLOVE_TEST(Remove)
     CLOVE_STRING_EQ("Item", removed->string);      
 }
 
+CLOVE_TEST(TakeItem)
+{
+    struct string_item *element = string_item_new("Item");
+    struct string_item *element02 = string_item_new("Item02");
+    struct string_item *element03 = string_item_new("Item03");
+
+    list_append_casting(&my_linked_list, element);
+    list_append_casting(&my_linked_list, element02);
+    list_append_casting(&my_linked_list, element03);
+
+    struct string_item *item = (struct string_item *)take_list_item((struct list_node**)&my_linked_list, 1);
+    
+    CLOVE_STRING_EQ("Item02", item->string);    
+}
+
+CLOVE_TEST(ItemsCount)
+{
+    struct string_item *element = string_item_new("Item");
+    struct string_item *element02 = string_item_new("Item02");
+    struct string_item *element03 = string_item_new("Item03");
+    struct string_item *element04 = string_item_new("Item04");
+
+    list_append_casting(&my_linked_list, element);
+    list_append_casting(&my_linked_list, element02);
+    list_append_casting(&my_linked_list, element03);
+    list_append_casting(&my_linked_list, element04);
+
+    int numElements = take_list_items_count((struct list_node**)&my_linked_list);
+
+    CLOVE_INT_EQ(4, numElements);
+}
+
 CLOVE_TEST(ReverseList)
 {
     struct string_item *element = string_item_new("Item");
@@ -110,9 +142,9 @@ CLOVE_TEST(ClearList)
     struct string_item *item = string_item_new("Item");
     list_append_casting(&my_linked_list, item);    
     
-    clear_myelement(&item);
-    //clear_myelement(&my_linked_list);
+    //clear_myelement(&item);
+    clear_myelement(&my_linked_list);
 
-    CLOVE_NULL(item);
-    //CLOVE_NULL(my_linked_list);
+    //CLOVE_NULL(item);
+    CLOVE_NULL(my_linked_list);
 }

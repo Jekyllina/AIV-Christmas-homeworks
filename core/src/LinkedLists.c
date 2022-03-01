@@ -84,6 +84,44 @@ struct list_node *list_remove(struct list_node **head, struct list_node *item)
     return current_node;
 }
 
+struct list_node *take_list_item(struct list_node **head, int element_index)
+{
+    int counter = 0;
+
+    struct list_node *current_node = *head;  
+    struct list_node *node_to_take = NULL;
+    
+    while(current_node)
+    {
+        node_to_take = current_node;
+        current_node = current_node->next;  
+
+        if(counter == element_index)   
+            break;
+
+        counter++;   
+    }    
+
+    return node_to_take;
+}
+
+int take_list_items_count(struct list_node **head)
+{
+    int counter = 0;
+
+    struct list_node *current_node = *head;  
+    struct list_node *node_to_take = NULL;
+    
+    while(current_node)
+    {
+        node_to_take = current_node;
+        current_node = current_node->next;         
+        counter++;   
+    }    
+
+    return counter;
+}
+
 
 
 struct string_item *string_item_new(const char *string)
@@ -104,6 +142,22 @@ void clear_myelement(struct string_item **item)
 {    
     free(*item);    
     *item = NULL;
+}
+
+void clear_mylist(struct string_item **list)
+{   
+    int elements = take_list_items_count((struct string_item **)&list);
+
+    for (int i = 0; i < elements; i++)
+    {
+        struct list_node *node = list_remove_casting(&list,list_get_tail((struct list_node **)list));
+        
+        free(node);
+        node = NULL;
+    }
+     
+    free(*list);    
+    *list = NULL;
 }
 
 struct string_item *reverse_linkedlist(struct string_item **list, struct string_item **reversed_list)
