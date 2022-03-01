@@ -111,8 +111,8 @@ CLOVE_TEST(ClearList)
     list_append_casting(&my_linked_list, item);    
     
     //clear_myelement(&item);
-    clear_myelement(&my_linked_list);
+    //clear_myelement(&my_linked_list);
 
     //CLOVE_NULL(item);
-    CLOVE_NULL(my_linked_list);
+    //CLOVE_NULL(my_linked_list);
 }

@@ -105,30 +105,32 @@ void clear_myelement(struct string_item **item)
     *item = NULL;
 }
 
-void clear_mylist(struct string_item **list)
-{   
-    struct list_node **node = (struct list_node **)list_remove_casting(&list, list_get_tail((struct list_node **)list));
+//work in progress
 
-    while(node)
-    {      
-        free(*node);        
-        *node = NULL;
+// void clear_mylist(struct string_item **list)
+// {   
+//     struct list_node **node = (struct list_node **)list_remove_casting(&list, list_get_tail((struct list_node **)list));
 
-        struct list_node* tail = (struct list_node*)list_get_tail((struct list_node**)list);
+//     while(node)
+//     {      
+//         free(*node);        
+//         *node = NULL;
 
-        if (!tail)
-        {
-            node = NULL;
-        }
-        else
-        {
-            node = (struct list_node **)list_remove((struct list_node**)&list, tail);
-        }
-    }
+//         struct list_node* tail = (struct list_node*)list_get_tail((struct list_node**)list);
+
+//         if (!tail)
+//         {
+//             node = NULL;
+//         }
+//         else
+//         {
+//             node = (struct list_node **)list_remove((struct list_node**)&list, tail);
+//         }
+//     }
      
-    free(*list);    
-    *list = NULL;
-}
+//     free(*list);    
+//     *list = NULL;
+// }
 
 struct string_item *reverse_linkedlist(struct string_item **list, struct string_item **reversed_list)
 {

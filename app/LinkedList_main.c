@@ -24,7 +24,7 @@ int main()
     if(!my_linked_list)
         printf("list null\n");
     else
-        printf("indirizzo %p\n", &my_linked_list);
+        printf("list not null: indirizzo %p\n", &my_linked_list);
     
     clear_myelement(&my_linked_list);
     //clear_mylist(&my_linked_list);
@@ -32,7 +32,7 @@ int main()
     if(!my_linked_list)
         printf("list null\n");
     else
-        printf("indirizzo %p\n", &my_linked_list);
+        printf("list not null: indirizzo %p\n", &my_linked_list);
     
     struct string_item *string_item = my_linked_list;    
 
