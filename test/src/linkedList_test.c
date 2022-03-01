@@ -8,9 +8,9 @@ CLOVE_SUITE_SETUP() {
     my_linked_list = NULL;
 }
 
-CLOVE_SUITE_TEARDOWN() {
-    clear_myelement(&my_linked_list);
-}
+// CLOVE_SUITE_TEARDOWN() {
+//     clear_myelement(&my_linked_list);
+// }
 
 CLOVE_TEST(ListIsNull)
 {
@@ -108,11 +108,16 @@ CLOVE_TEST(ReverseList)
 CLOVE_TEST(ClearList)
 {
     struct string_item *item = string_item_new("Item");
+    struct string_item *item2 = string_item_new("Item2");
+
     list_append_casting(&my_linked_list, item);    
+    list_append_casting(&my_linked_list, item2);    
     
-    //clear_myelement(&item);
+    clear_myelement(&item2);
+    clear_myelement(&item);
     //clear_myelement(&my_linked_list);
 
-    //CLOVE_NULL(item);
-    //CLOVE_NULL(my_linked_list);
+    CLOVE_NULL(item2);
+    CLOVE_NULL(item);
+    CLOVE_NULL(my_linked_list);
 }
