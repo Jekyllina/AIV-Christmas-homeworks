@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "dynarray_refactored.h"
+#include "dynarray.h"
 
 int main()
 {
