@@ -9,8 +9,6 @@ struct list_node *list_get_tail(struct list_node **head);
 struct list_node *list_append(struct list_node **head, struct list_node *item);
 struct list_node *list_pop(struct list_node **head);
 struct list_node *list_remove(struct list_node **head, struct list_node *item);
-struct list_node *take_list_item(struct list_node **head, int element_index);
-int take_list_items_count(struct list_node **head);
 
 
 struct string_item
@@ -20,8 +18,8 @@ struct string_item
 };
 
 struct string_item *string_item_new(const char *string);
+int valid_element(struct string_item *item);
 void clear_myelement(struct string_item **item);
-void clear_mylist(struct string_item **list);
 struct string_item *reverse_linkedlist(struct string_item **list, struct string_item **reversed_list);
 
 

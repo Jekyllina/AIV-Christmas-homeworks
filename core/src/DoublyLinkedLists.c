@@ -210,8 +210,23 @@ struct doubly_string_item *doubly_string_item_new(const char *string)
     return item;
 }
 
+int valid_element(struct doubly_string_item *item)
+{
+    if(!item->node.next && !item->string) 
+        return 0;
+
+    return 1;
+}
+
 void clear_myelement(struct doubly_string_item **item)
 {    
-    free(*item);
+    if(!valid_element(*item)) 
+        return;
+
+    (*item)->node.next = NULL;
+    (*item)->node.prev = NULL;
+    (*item)->string = NULL;
+
+    free(*item);    
     *item = NULL;
 }

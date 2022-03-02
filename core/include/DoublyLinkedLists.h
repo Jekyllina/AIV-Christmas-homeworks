@@ -24,6 +24,7 @@ struct doubly_string_item
 };
 
 struct doubly_string_item *doubly_string_item_new(const char *string);
+int valid_element(struct doubly_string_item *item);
 void clear_myelement(struct doubly_string_item **item);
 
 #define doubly_list_node_doubleptr(obj) (struct doubly_list_node **)obj

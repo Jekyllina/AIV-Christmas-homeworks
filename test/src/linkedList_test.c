@@ -105,7 +105,7 @@ CLOVE_TEST(ReverseList)
     CLOVE_STRING_EQ("Item03", reversedHead->string); 
 }
 
-CLOVE_TEST(ClearList)
+CLOVE_TEST(ClearElement)
 {
     struct string_item *item = string_item_new("Item");
     struct string_item *item2 = string_item_new("Item2");
@@ -115,9 +115,9 @@ CLOVE_TEST(ClearList)
     
     clear_myelement(&item2);
     clear_myelement(&item);
-    //clear_myelement(&my_linked_list);
+    clear_myelement(&my_linked_list);
 
     CLOVE_NULL(item2);
     CLOVE_NULL(item);
-    CLOVE_NULL(my_linked_list);
+    CLOVE_INT_EQ(valid_element(my_linked_list), 0);
 }

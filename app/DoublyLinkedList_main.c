@@ -49,7 +49,16 @@ int main()
         string_item_shuffled = (struct doubly_string_item*)string_item_shuffled->node.next;
     }
 
-    clear_myelement(&my_linked_list);
+
+    clear_myelement(&element05);
+    clear_myelement(&element04);
+    clear_myelement(&element03);
+    clear_myelement(&element02);    
+    clear_myelement(&element06);
+    clear_myelement(&element07);
+    clear_myelement(&element01);
+
+    my_linked_list = NULL;
 
     return 0;
 }

@@ -189,4 +189,19 @@ CLOVE_TEST(ShuffleList)
     CLOVE_STRING_EQ(item2->string, element02->string);
 }
 
-//to do: clear
+CLOVE_TEST(ClearElement)
+{
+    struct doubly_string_item *element01 = doubly_string_item_new("Grey");
+    struct doubly_string_item *element02 = doubly_string_item_new("Yellow");
+    
+    doubly_list_append_casting(&my_linked_list, element01);
+    doubly_list_append_casting(&my_linked_list, element02);
+    
+    clear_myelement(&element02);
+    //clear_myelement(&element01);
+    //clear_myelement(&my_linked_list);
+
+    CLOVE_NULL(element02);
+    //CLOVE_NULL(element01);
+    //CLOVE_INT_EQ(valid_element(my_linked_list), 0);
+}
