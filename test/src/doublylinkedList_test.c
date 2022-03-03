@@ -81,11 +81,11 @@ CLOVE_TEST(Remove)
 
     struct doubly_string_item *itemRemoved = (struct doubly_string_item *)doubly_list_remove_casting(&my_linked_list, element04);
 
-    int numElements = doubly_take_list_items_count_cast(&my_linked_list);
+    int num_elements = doubly_take_list_items_count_cast(&my_linked_list);
 
     CLOVE_STRING_EQ("Blue", itemRemoved->string);
 
-    CLOVE_INT_EQ(1, numElements);
+    CLOVE_INT_EQ(1, num_elements);
 }
 
 CLOVE_TEST(InsertAfterItem)
@@ -100,13 +100,13 @@ CLOVE_TEST(InsertAfterItem)
 
     doubly_insert_after_item_cast(&my_linked_list, element05, element07);
 
-    int numElements = doubly_take_list_items_count_cast(&my_linked_list);
+    int num_elements = doubly_take_list_items_count_cast(&my_linked_list);
 
     CLOVE_PTR_EQ(element07, element05->node.next);
     CLOVE_PTR_EQ(element07, element06->node.prev);
     CLOVE_PTR_EQ(element06, element07->node.next);
 
-    CLOVE_INT_EQ(3, numElements);
+    CLOVE_INT_EQ(3, num_elements);
 }
 
 CLOVE_TEST(InsertBeforeItem)
@@ -121,12 +121,12 @@ CLOVE_TEST(InsertBeforeItem)
 
     doubly_insert_before_item_cast(&my_linked_list, element08, element10);
 
-    int numElements = doubly_take_list_items_count_cast(&my_linked_list);
+    int num_elements = doubly_take_list_items_count_cast(&my_linked_list);
 
     CLOVE_PTR_EQ(element10, element08->node.prev);
     CLOVE_PTR_EQ(element08, element10->node.next);
 
-    CLOVE_INT_EQ(3, numElements);
+    CLOVE_INT_EQ(3, num_elements);
 }
 
 CLOVE_TEST(ItemsCount)
@@ -139,9 +139,9 @@ CLOVE_TEST(ItemsCount)
     doubly_list_append_casting(&my_linked_list, element02);
     doubly_list_append_casting(&my_linked_list, element03);
 
-    int numElements = doubly_take_list_items_count_cast(&my_linked_list);
+    int num_elements = doubly_take_list_items_count_cast(&my_linked_list);
 
-    CLOVE_INT_EQ(3, numElements);
+    CLOVE_INT_EQ(3, num_elements);
 }
 
 CLOVE_TEST(TakeAnItem)
@@ -180,7 +180,7 @@ CLOVE_TEST(ShuffleList)
     doubly_list_append_casting(&my_linked_list, element02);
     doubly_list_append_casting(&my_linked_list, element03);
 
-    int numElements = doubly_take_list_items_count_cast(&my_linked_list);
+    int num_elements = doubly_take_list_items_count_cast(&my_linked_list);
 
     struct doubly_string_item *shuffledList = (struct doubly_string_item *)doubly_shuffle_list_cast(&my_linked_list, 2);
 
@@ -191,7 +191,7 @@ CLOVE_TEST(ShuffleList)
     struct doubly_string_item *item2 = (struct doubly_string_item *)doubly_take_list_item_cast(&shuffledList, 2);
     
     CLOVE_NOT_NULL(shuffledList);
-    CLOVE_INT_EQ(numElements, numElementsShuffledList);    
+    CLOVE_INT_EQ(num_elements, numElementsShuffledList);    
 
     CLOVE_STRING_EQ(item0->string, element01->string);
     CLOVE_STRING_EQ(item1->string, element03->string);

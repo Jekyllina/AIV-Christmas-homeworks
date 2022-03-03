@@ -166,30 +166,30 @@ struct doubly_list_node *take_list_item(struct doubly_list_node **head, int elem
 
 struct doubly_list_node *shuffle_doublylist(struct doubly_list_node **head, int number_of_shuffles)
 {
-    int randomN = 0;
-    int randomN2 = 0;
+    int random_number = 0;
+    int random_number2 = 0;
 
     int elements = take_list_items_count(head);
     
     for (int i = 0; i < number_of_shuffles; i++)
     {
-        randomN = rand() % elements;
+        random_number = rand() % elements;
         
-        randomN2 = rand() % (elements-1);  //we remove the item to shuffle so for the 2nd we have to do (elements-1)
+        random_number2 = rand() % (elements-1);  //we remove the item to shuffle so for the 2nd we have to do (elements-1)
         
         if(i%2 == 0)
         {            
-            struct doubly_list_node *node = take_list_item(head, randomN);
+            struct doubly_list_node *node = take_list_item(head, random_number);
             struct doubly_list_node *node_removed = doubly_list_remove(head, node);
-            struct doubly_list_node *node2 = take_list_item(head, randomN2);
+            struct doubly_list_node *node2 = take_list_item(head, random_number2);
             
             doubly_insert_before_item(head, node2, node_removed);            
         }
         else
         {            
-            struct doubly_list_node *node = take_list_item(head, randomN);
+            struct doubly_list_node *node = take_list_item(head, random_number);
             struct doubly_list_node *node_removed = doubly_list_remove(head, node);
-            struct doubly_list_node *node2 = take_list_item(head, randomN2);
+            struct doubly_list_node *node2 = take_list_item(head, random_number2);
             
             doubly_insert_after_item(head, node2, node_removed);            
         }
