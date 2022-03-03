@@ -1,5 +1,5 @@
 #define CLOVE_SUITE_NAME DynarrayTest
-#include "clove-experimental.h"
+#include "clove.h"
 #include "dynarray.h"
 
 dynarray_t array;

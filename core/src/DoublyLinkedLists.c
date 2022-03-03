@@ -20,7 +20,7 @@ struct doubly_list_node *doubly_list_append(struct doubly_list_node **head, stru
 {
     struct doubly_list_node *tail = doubly_list_get_tail(head);
 
-    if(!tail)
+    if(!tail)  
     {
         *head = item;
     }
@@ -123,12 +123,32 @@ struct doubly_list_node *doubly_insert_before_item(struct doubly_list_node **hea
     return item_to_add;    
 }
 
-struct doubly_list_node *take_list_item(struct doubly_list_node **head, int element_index)
+int take_list_items_count(struct doubly_list_node **head)
 {
     int counter = 0;
 
     struct doubly_list_node *current_node = *head;  
+    
+    while(current_node)
+    {        
+        current_node = current_node->next;         
+        counter++;   
+    }    
+
+    return counter;
+}
+
+struct doubly_list_node *take_list_item(struct doubly_list_node **head, int element_index)
+{   
+    int counter = 0;
+
+    struct doubly_list_node *current_node = *head;  
     struct doubly_list_node *node_to_take = NULL;
+
+    int elements = take_list_items_count(head);
+
+    if(element_index < 0 || element_index > elements)   
+        return NULL;
     
     while(current_node)
     {
@@ -144,23 +164,6 @@ struct doubly_list_node *take_list_item(struct doubly_list_node **head, int elem
     return node_to_take;
 }
 
-int take_list_items_count(struct doubly_list_node **head)
-{
-    int counter = 0;
-
-    struct doubly_list_node *current_node = *head;  
-    struct doubly_list_node *node_to_take = NULL;
-    
-    while(current_node)
-    {
-        node_to_take = current_node;
-        current_node = current_node->next;         
-        counter++;   
-    }    
-
-    return counter;
-}
-
 struct doubly_list_node *shuffle_doublylist(struct doubly_list_node **head, int number_of_shuffles)
 {
     int randomN = 0;
@@ -172,7 +175,7 @@ struct doubly_list_node *shuffle_doublylist(struct doubly_list_node **head, int 
     {
         randomN = rand() % elements;
         
-        randomN2 = rand() % (elements-1);
+        randomN2 = rand() % (elements-1);  //we remove the item to shuffle so for the 2nd we have to do (elements-1)
         
         if(i%2 == 0)
         {            
@@ -210,19 +213,8 @@ struct doubly_string_item *doubly_string_item_new(const char *string)
     return item;
 }
 
-int valid_element(struct doubly_string_item *item)
-{
-    if(!item->node.next && !item->string) 
-        return 0;
-
-    return 1;
-}
-
 void clear_myelement(struct doubly_string_item **item)
 {    
-    if(!valid_element(*item)) 
-        return;
-
     (*item)->node.next = NULL;
     (*item)->node.prev = NULL;
     (*item)->string = NULL;

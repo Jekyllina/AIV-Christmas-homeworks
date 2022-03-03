@@ -1,0 +1,35 @@
+CC := clang.exe
+
+INCLUDE := -Icore\include
+TESTINCLUDE := -Itest\include
+
+all: bin\Sets.exe
+
+bin\sets.o: core\src\Sets.c 
+	$(CC) -c $(INCLUDE) -o $@ $^
+
+bin\sets_main.o: app\Sets_main.c 
+	$(CC) -c $(INCLUDE) -o $@ $^
+
+bin\Sets.exe: bin\sets.o bin\sets_main.o
+	$(CC) -o $@ $^
+
+app: bin\Sets.exe
+	bin\Sets.exe
+
+
+test: bin\SetsTest.exe
+
+bin\setstest.o: test\src\sets_test.c 
+	$(CC) -c $(INCLUDE) $(TESTINCLUDE) -o $@ $^
+
+bin\setstest_main.o: test\src\main.c 
+	$(CC) -c $(INCLUDE) $(TESTINCLUDE) -o $@ $^
+
+bin\SetsTest.exe: bin\sets.o bin\setstest.o bin\setstest_main.o
+	$(CC) -o $@ $^
+
+testexe: bin\SetsTest.exe
+	bin\SetsTest.exe
+
+.PHONY: all app test testexe

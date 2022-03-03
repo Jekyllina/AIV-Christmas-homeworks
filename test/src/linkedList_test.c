@@ -1,5 +1,5 @@
 #define CLOVE_SUITE_NAME LinkedListTest
-#include "clove-experimental.h"
+#include "clove.h"
 #include "LinkedLists.h"
 
 struct string_item *my_linked_list;
@@ -7,10 +7,6 @@ struct string_item *my_linked_list;
 CLOVE_SUITE_SETUP() {    
     my_linked_list = NULL;
 }
-
-// CLOVE_SUITE_TEARDOWN() {
-//     clear_myelement(&my_linked_list);
-// }
 
 CLOVE_TEST(ListIsNull)
 {
@@ -115,9 +111,7 @@ CLOVE_TEST(ClearElement)
     
     clear_myelement(&item2);
     clear_myelement(&item);
-    clear_myelement(&my_linked_list);
-
+    
     CLOVE_NULL(item2);
-    CLOVE_NULL(item);
-    CLOVE_INT_EQ(valid_element(my_linked_list), 0);
+    CLOVE_NULL(item);    
 }
