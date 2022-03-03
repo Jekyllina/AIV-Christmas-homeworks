@@ -100,26 +100,14 @@ struct string_item *string_item_new(const char *string)
     return item;
 }
 
-int valid_element(struct string_item *item)
-{
-    if(!item->node.next && !item->string) 
-        return 0;
-
-    return 1;
-}
-
 void clear_myelement(struct string_item **item)
-{    
-    if(!valid_element(*item)) 
-        return;
-
+{       
     (*item)->node.next = NULL;
     (*item)->string = NULL;
 
     free(*item);    
     *item = NULL;
 }
-
 
 struct string_item *reverse_linkedlist(struct string_item **list, struct string_item **reversed_list)
 {

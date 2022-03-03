@@ -41,13 +41,12 @@ int main()
         string_item_reversed = (struct string_item*)string_item_reversed->node.next;
     }
     
-
     clear_myelement(&element05); 
     clear_myelement(&element04);       
     clear_myelement(&element03);       
     clear_myelement(&element01);       
-    clear_myelement(&element02);     
-
+    clear_myelement(&element02);    
+    
     my_linked_list = NULL;  
     
     return 0;
